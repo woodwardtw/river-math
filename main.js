@@ -2,7 +2,6 @@
 function setup() { 
   //canvas width, fullwidth, bankwidth, occupied width, depth one, depth two, depth three
  crossSectionBuilder(1200, 833, 680, 5, 19, 348, 24, 127, 111);
-
 } 
 
 
