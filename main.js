@@ -1,42 +1,42 @@
 
 function setup() { 
-  //canvas width, fullwidth, bankwidth, occupied width, depth one, depth two, depth three
- crossSectionBuilder(1200, 833, 680, 5, 19, 348, 24, 127, 111);
+  //canvas, fullWidth, bankWidth, bankLeft, bankRight, occWidth, dOne, dTwo, dThree
+ crossSectionBuilder('Zone I',2300,1098.800,3530.400,1642.400,1579.000,1621.667,94.109,121.913,144.652);
 } 
 
 
-function crossSectionBuilder(canvas, fullWidth, bankWidth, bankLeft, bankRight, occWidth, dOne, dTwo, dThree){
-  createCanvas(canvas, 800);//width/height
+function crossSectionBuilder(title,canvas, fullWidth, bankWidth, bankLeft, bankRight, occWidth, dOne, dTwo, dThree){
+  createCanvas(canvas, 700);//width/height
   background("#fff");
   noSmooth();
  
-  textSize(14);
+  textSize(18);
   //let pointWords = x + ', ' + y;
-  text('Full Width - '+ fullWidth, fullWidth/2, 15);
-  //fullest width 
-  strokeWeight(4);
-  line(10, 20, fullWidth, 20);
+  // text('Full Width - '+ fullWidth +' m', fullWidth/2, 15);
+  // //fullest width 
+  // strokeWeight(4);
+  // line(10, 20, fullWidth, 20);
   //pointMaker(fullWidth/2, 10, 'green');
   // pointMaker(fullWidth,10, 'green');
-  
+  text(title, bankWidth/2, 550)
   
   //bank width
   textSize(12);
   //let pointWords = x + ', ' + y;
-  text('Bank Width - ' + bankWidth, fullWidth/2, 45);
-  let bankStart = (fullWidth-bankWidth)/2;
+  text('Bank Width - ' + fixMath(bankWidth) +' m', bankWidth/2, 45);
+  let bankStart = 10;
   let bankEnd = bankStart+bankWidth;
-  let bankOffset = 45;
-  strokeWeight(3);
-  stroke('red');
-  line(bankStart, bankOffset+bankLeft, bankEnd, bankOffset+bankRight );
-  //pointMaker(bankStart, bankOffset+bankLeft, 'green');
-  //pointMaker(bankEnd, bankOffset+bankRight, 'green');
+  let bankOffset = 0;
+  // strokeWeight(3);
+  // stroke('brown');
+  // line(bankStart, bankOffset+bankLeft, bankEnd, bankOffset+bankRight );
+  // pointMaker(bankStart, bankOffset+bankLeft, 'green');
+  // pointMaker(bankEnd, bankOffset+bankRight, 'green');
   
   //occupied width
   strokeWeight(0);
-  text('Occupied Width - ' + occWidth, fullWidth/2, 90);
-  let occStart = (fullWidth-occWidth)/2;
+  text('Occupied Width - ' + fixMath(occWidth) +' m', bankWidth/2, 90);
+  let occStart = (bankWidth-occWidth)/2;
   let occEnd = occStart+occWidth;
   let occOffset = 95;
   strokeWeight(3);
@@ -73,6 +73,13 @@ function crossSectionBuilder(canvas, fullWidth, bankWidth, bankLeft, bankRight, 
     
     vertex(occEnd, occOffset);
   endShape(CLOSE);
+
+   strokeWeight(0);
+  fill('black');
+  text(fixMath(dOne)+' m', occStart+(occWidth/6)+5,dOne+occOffset);
+
+  text(fixMath(dTwo)+' m', occStart+(occWidth/2),dTwo+occOffset+15);
+  text(fixMath(dThree)+' m', occEnd-(occEnd/6)+10,dThree+occOffset);
 }
 
 
@@ -88,6 +95,18 @@ function pointMaker(x, y, color, theText){
  
 }
 
+function biggestBank(x,y){
+  if (x>y){
+    return x;
+  } else {
+    return y;
+  }
+}
+
+function fixMath(number){
+  let realNumber = number/1000
+  return Math.round((realNumber + Number.EPSILON) * 1000) / 1000;
+}
 
 function download() {
   var download = document.getElementById("download");
